@@ -35,4 +35,4 @@
 ![Ekran Görüntüsü (585)](https://user-images.githubusercontent.com/57114578/132261157-326d31f1-f362-47ae-9699-fb9fb7984a5e.png)
 ![Ekran Görüntüsü (581)](https://user-images.githubusercontent.com/57114578/132261162-b550f9f1-2454-4691-a723-c50250f6e255.png)
 ![Ekran Görüntüsü (582)](https://user-images.githubusercontent.com/57114578/132261166-1f01b406-2a95-4100-99cc-c05b696aade4.png)
-![Ekran Görüntüsü (583)](https://user-images.githubusercontent.com/57114578/132261170-5aca5355-a664-434f-9294-77eaa48e07e6.png)
+
