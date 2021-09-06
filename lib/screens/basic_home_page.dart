@@ -86,59 +86,9 @@ class BasicHomePageState extends State {
                   child: CircularProgressIndicator(),
                 ),
           onRefresh: _refreshList,
-          /*StreamBuilder<QuerySnapshot>(
-        stream: FirebaseFirestore.instance.collection("kolay").snapshots(),
-        builder: (context, snapshot) {
-          if (!snapshot.hasData) {
-            return LinearProgressIndicator();
-          }
-
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            Text("Loading");
-          } else {
-            return buildBody(context, snapshot.data.docs);
-          }
-        },
-      ),*/
         ));
   }
 }
-
-/*
-StreamBuilder<QuerySnapshot>(
-        stream: FirebaseFirestore.instance
-            .collection("categories")
-            .doc("hrYrrCSHvzcAk3muCmbX")
-            .collection("ozellik")
-            .snapshots(),
-        builder: (context, snapshot) {
-          if (!snapshot.hasData) {
-            return LinearProgressIndicator();
-          }
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            Text("Loading");
-          } else {
-            return buildBody(context, snapshot.data.docs);
-          }
-        },
-      ),
-
-
-
-
-*/
-
-/* Widget getData() {
-    databaseReference
-        .collection("categories")
-        .doc("hrYrrCSHvzcAk3muCmbX")
-        .collection("ozellik")
-        .get()
-        .then((QuerySnapshot snapshot) {
-      snapshot.docs.forEach((f) => print('${f.data}}'));
-      //buildBody(context, snapshot.docs);
-    });
-  }*/
 
 Widget buildBody(BuildContext context, List<DocumentSnapshot> snapshot) {
   return ListView(
