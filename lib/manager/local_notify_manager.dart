@@ -86,6 +86,16 @@ class Notifications {
     return scheduleDate;
   }
 
+  tz.TZDateTime _nextIntanceOf(String hour, String minute) {
+    final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
+    tz.TZDateTime scheduleDate = tz.TZDateTime(tz.local, now.year, now.month,
+        now.day, int.parse(hour), int.parse(minute));
+    if (scheduleDate.isBefore(now)) {
+      scheduleDate = scheduleDate.add(Duration(days: 1));
+    }
+    return scheduleDate;
+  }
+
   Future<void> scheduleNext5SecondsNotification() async {
     final details = NotificationDetails(
       android: AndroidNotificationDetails(
@@ -117,6 +127,24 @@ class Notifications {
         'İngilizce Öğrenme Zamanı',
         'Hadi hemen başla',
         _nextIntanceOfTenAM(),
+        const NotificationDetails(
+          android: AndroidNotificationDetails(
+              'daily notification channel id',
+              'daily notification channel name',
+              'daily notification description'),
+        ),
+        androidAllowWhileIdle: true,
+        uiLocalNotificationDateInterpretation:
+            UILocalNotificationDateInterpretation.absoluteTime,
+        matchDateTimeComponents: DateTimeComponents.time);
+  }
+
+  Future<void> scheduleDailyNotification(String hour, String minute) async {
+    await this.flutterLocalNotificationPlugin.zonedSchedule(
+        0,
+        'İngilizce Öğrenme Zamanı',
+        'Hadi hemen başla',
+        _nextIntanceOf(hour, minute),
         const NotificationDetails(
           android: AndroidNotificationDetails(
               'daily notification channel id',

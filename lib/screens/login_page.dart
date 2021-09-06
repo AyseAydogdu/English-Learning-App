@@ -52,7 +52,6 @@ class LoginPageState extends State<LoginPage> {
               child: CircularProgressIndicator(),
             )
           : Container(
-              color: Colors.green[200],
               child: Column(
                 children: <Widget>[
                   Expanded(

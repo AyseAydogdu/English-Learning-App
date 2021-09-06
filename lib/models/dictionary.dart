@@ -1,8 +1,8 @@
-class Dictionary {
+class Dictionarys {
   String name;
   String translatedName;
-  Dictionary(this.name, this.translatedName);
-  Dictionary.fromMap(Map<String, dynamic> data) {
+  Dictionarys(this.name, this.translatedName);
+  Dictionarys.fromMap(Map<String, dynamic> data) {
     name = data['name'];
     translatedName = data['translatedName'];
   }

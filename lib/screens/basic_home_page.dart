@@ -26,56 +26,67 @@ class BasicHomePageState extends State {
   Categories category;
   @override
   void initState() {
-    final Data cartProvider = Provider.of<Data>(context, listen: false);
-    CategoryApi.getCategoriesKolay(cartProvider);
+    final Data categoryProvider = Provider.of<Data>(context, listen: false);
+    CategoryApi.getCategoriesKolay(categoryProvider);
     //List<Categories> categories = cartProvider.getCategories();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    final Data cartProvider = Provider.of<Data>(context);
+    final Data categoryProvider = Provider.of<Data>(context);
 
     // CategoryApi.getCategoriesKolay(cartProvider);
 
     Future<void> _refreshList() async {
-      CategoryApi.getCategoriesKolay(cartProvider);
+      CategoryApi.getCategoriesKolay(categoryProvider);
     }
 
     return Scaffold(
+        appBar: AppBar(
+          title: Text("Kategoriler"),
+        ),
         body: new RefreshIndicator(
-      child: cartProvider != null
-          ? ListView.separated(
-              itemBuilder: (BuildContext context, int index) {
-                category = cartProvider.categoryList[index];
-                return InkWell(
-                  onTap: () {
-                    cartProvider.setCurrentCategories(category);
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => PartsPage(),
-                        ));
-                  },
-                  child: ListTile(
-                      subtitle: Text(category.name),
-                      title: Image.network(category.imageUrl)
-                      // subtitle: Text(cartProvider.categoryList[index].category),
+          child: categoryProvider != null
+              ? ListView.builder(
+                  itemBuilder: (BuildContext context, int index) {
+                    category = categoryProvider.categoryList[index];
+                    return InkWell(
+                      onTap: () {
+                        //   categoryProvider.setCurrentCategories(category);
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => PartsPage(),
+                            ));
+                      },
+                      child: Column(
+                        children: [
+                          Container(
+                            padding: EdgeInsets.all(10),
+                            height: 150,
+                            width: 200,
+                            child: CircleAvatar(
+                                backgroundImage:
+                                    NetworkImage(category.imageUrl)),
+                          ),
+                          Container(child: Center(child: Text(category.name))),
+                        ],
                       ),
-                );
-              },
-              itemCount: cartProvider.categoryList.length,
-              separatorBuilder: (BuildContext context, int index) {
+                    );
+                  },
+                  itemCount: categoryProvider.categoryList.length,
+                  /*  separatorBuilder: (BuildContext context, int index) {
                 return Divider(
                   color: Colors.black,
                 );
-              },
-            )
-          : Center(
-              child: CircularProgressIndicator(),
-            ),
-      onRefresh: _refreshList,
-      /*StreamBuilder<QuerySnapshot>(
+              },*/
+                )
+              : Center(
+                  child: CircularProgressIndicator(),
+                ),
+          onRefresh: _refreshList,
+          /*StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance.collection("kolay").snapshots(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
@@ -89,7 +100,7 @@ class BasicHomePageState extends State {
           }
         },
       ),*/
-    ));
+        ));
   }
 }
 

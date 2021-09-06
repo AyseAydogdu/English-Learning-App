@@ -56,27 +56,51 @@ class ProverbPageState extends State {
                     child: Column(
                       children: [
                         Container(
-                            color: Colors.orange[200],
+                            height: MediaQuery.of(context).size.height * 0.2,
+                            width: MediaQuery.of(context).size.width * 0.9,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Colors.blue[200],
+                            ),
+                            //color: Colors.orange[200],
                             //decoration: BoxDecoration(
                             //    borderRadius: BorderRadius.circular(15)),
-                            child: Text(proverb.proverb,
-                                style: TextStyle(fontSize: 15))),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Container(
-                            color: Colors.pink[200],
-                            child: Text(
-                              proverb.translation,
-                              style: TextStyle(fontSize: 15),
+                            child: Center(
+                              child: Text(proverb.proverb,
+                                  style: TextStyle(fontSize: 17)),
                             )),
                         SizedBox(
                           height: 5,
                         ),
                         Container(
-                            color: Colors.brown[200],
-                            child: Text(proverb.meaning,
-                                style: TextStyle(fontSize: 15))),
+                            height: MediaQuery.of(context).size.height * 0.2,
+                            width: MediaQuery.of(context).size.width * 0.9,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Colors.green[200],
+                            ),
+                            child: Center(
+                              child: Text(
+                                proverb.translation,
+                                style: TextStyle(fontSize: 17),
+                              ),
+                            )),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Container(
+                            padding: EdgeInsets.all(10),
+                            height: MediaQuery.of(context).size.height * 0.4,
+                            width: MediaQuery.of(context).size.width * 0.9,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Colors.brown[200],
+                            ),
+                            // color: Colors.brown[200],
+                            child: Center(
+                              child: Text(proverb.meaning,
+                                  style: TextStyle(fontSize: 17)),
+                            )),
                         SizedBox(
                           height: 20,
                         ),

@@ -1,20 +1,28 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:language_learning_app/models/rigmarole.dart';
+import 'package:language_learning_app/provider/artist_manager.dart';
 import 'package:language_learning_app/provider/auth_manager.dart';
 import 'package:language_learning_app/provider/data.dart';
 import 'package:language_learning_app/provider/dictionary_manager.dart';
 import 'package:language_learning_app/provider/fundata.dart';
+import 'package:language_learning_app/provider/gramer_manager.dart';
 import 'package:language_learning_app/provider/theme_manager.dart';
+import 'package:language_learning_app/provider/user_manager.dart';
+import 'package:language_learning_app/provider/yds_manager.dart';
 import 'package:language_learning_app/screens/basic_user_page.dart';
+import 'package:language_learning_app/screens/conjunction_page.dart';
 import 'package:language_learning_app/screens/drag_drop.dart';
 import 'package:language_learning_app/screens/gap_filling.dart';
+import 'package:language_learning_app/screens/gramer_page.dart';
 import 'package:language_learning_app/screens/independent_user.dart';
 import 'package:language_learning_app/screens/level_page.dart';
 import 'package:language_learning_app/screens/login_page.dart';
 import 'package:language_learning_app/screens/parts.dart';
+import 'package:language_learning_app/screens/phrasalVerb_page.dart';
 import 'package:language_learning_app/screens/proficient_user.dart';
 import 'package:language_learning_app/screens/proverb_page.dart';
+import 'package:language_learning_app/screens/quiz_page.dart';
 import 'package:language_learning_app/screens/rigmarole_page.dart';
 import 'package:language_learning_app/screens/scratcher.dart';
 import 'package:language_learning_app/screens/selection_page.dart';
@@ -22,6 +30,7 @@ import 'package:language_learning_app/screens/stt.dart';
 import 'package:language_learning_app/screens/text_iki.dart';
 import 'package:language_learning_app/screens/translate_text_quiz.dart';
 import 'package:language_learning_app/screens/tts.dart';
+import 'package:language_learning_app/screens/yds_page.dart';
 
 import 'package:language_learning_app/shared_pref.dart';
 import 'package:provider/provider.dart';
@@ -55,6 +64,18 @@ Future<void> main() async {
     ),
     ChangeNotifierProvider(
       create: (context) => DictionaryManager(),
+    ),
+    ChangeNotifierProvider(
+      create: (context) => ArtistManager(),
+    ),
+    ChangeNotifierProvider(
+      create: (context) => UserManager(),
+    ),
+    ChangeNotifierProvider(
+      create: (context) => GramerManager(),
+    ),
+    ChangeNotifierProvider(
+      create: (context) => YdsManager(),
     ),
   ], child: MyApp()));
 }
@@ -105,7 +126,11 @@ class _MyAppState extends State<MyApp> {
         "/basicPage": (context) => BasicUserPage(),
         "/proverb": (context) => ProverbPage(),
         "/rigmarole": (context) => RigmarolePage(),
-        //"/stories": (context) => StoryPage(0),
+        "/Gramer": (context) => GramerPage(),
+        "/Yds/Yökdil": (context) => YdsPage(),
+        "/Quiz": (context) => QuizPage(),
+        "/0": (context) => PhrasalVerbPage(),
+        "/1": (context) => ConjunctionPage(),
       },
     );
   }

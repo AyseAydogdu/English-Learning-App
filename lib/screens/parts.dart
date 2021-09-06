@@ -18,8 +18,8 @@ class PartsPageState extends State {
 
   @override
   void initState() {
-    Data cartProvider = Provider.of<Data>(context, listen: false);
-    CategoryApi.getSubjects(cartProvider, category.name);
+    //  Data cartProvider = Provider.of<Data>(context, listen: false);
+    //  CategoryApi.getSubjects(cartProvider, category.name);
     super.initState();
   }
 
@@ -29,116 +29,118 @@ class PartsPageState extends State {
 
     List<Categories> categories = cartProvider.categoryList;
     return Scaffold(
-        appBar: AppBar(
-          title: Text(categories[0].name),
-        ),
-        body: Container(
-          // height: 800,
-          width: 500,
-          child: ListView(
-            children: [
-              Center(
-                child: InkWell(
-                  onTap: () {
-                    // cartProvider.setCurrentCategories(categories[index]);
-                    Navigator.pushNamed(context, "/dragDrop");
-                  },
-                  //
-                  child: Container(
+      appBar: AppBar(
+        title: Text("Alıştırmalar"),
+      ),
+      body: ListView(
+        children: [
+          Center(
+            child: InkWell(
+              onTap: () {
+                // cartProvider.setCurrentCategories(categories[index]);
+                Navigator.pushNamed(context, "/dragDrop");
+              },
+              //
+              child: Column(
+                children: [
+                  Container(
                     height: 150,
                     width: 200,
                     child: CircleAvatar(
-                      child: Text(
-                        "Eşleştirme",
-                        style: TextStyle(fontSize: 25, color: Colors.black87),
-                      ),
                       backgroundImage: AssetImage("images/surukle.jpg"),
                     ),
                   ),
-                ),
+                  Text(
+                    "Eşleştirme",
+                    style: TextStyle(
+                        fontSize: 25,
+                        color: Colors.black,
+                        fontStyle: FontStyle.italic),
+                  ),
+                ],
               ),
-              SizedBox(
-                height: 20,
-              ),
-              Center(
-                child: InkWell(
-                  onTap: () {
-                    Navigator.pushNamed(context, "/translateText");
-                  },
-                  child: Container(
+            ),
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Center(
+            child: InkWell(
+              onTap: () {
+                Navigator.pushNamed(context, "/translateText");
+              },
+              child: Column(
+                children: [
+                  Container(
                     height: 150,
                     width: 200,
                     child: CircleAvatar(
-                      child: Text("Metin çevirme",
-                          style:
-                              TextStyle(fontSize: 25, color: Colors.black87)),
                       backgroundImage: AssetImage("images/text.png"),
                     ),
                   ),
-                ),
+                  Text("Metin çevirme",
+                      style: TextStyle(
+                          fontSize: 25,
+                          color: Colors.black,
+                          fontStyle: FontStyle.italic)),
+                ],
               ),
-              SizedBox(
-                height: 20,
-              ),
-              Center(
-                child: InkWell(
-                  onTap: () {
-                    Navigator.pushNamed(context, "/tts");
-                  },
-                  child: Container(
+            ),
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Center(
+            child: InkWell(
+              onTap: () {
+                Navigator.pushNamed(context, "/tts");
+              },
+              child: Column(
+                children: [
+                  Container(
                     height: 150,
                     width: 200,
                     child: CircleAvatar(
-                      child: Text("Dinle ve Yaz",
-                          style:
-                              TextStyle(fontSize: 25, color: Colors.black87)),
                       backgroundImage: AssetImage("images/dinleme.jpg"),
                     ),
                   ),
-                ),
+                  Text("Dinle ve Yaz",
+                      style: TextStyle(
+                          fontSize: 25,
+                          color: Colors.black,
+                          fontStyle: FontStyle.italic)),
+                ],
               ),
-              SizedBox(
-                height: 20,
-              ),
-              Center(
-                child: InkWell(
-                  onTap: () {
-                    Navigator.pushNamed(context, "/stt");
-                  },
-                  child: Container(
+            ),
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Center(
+            child: InkWell(
+              onTap: () {
+                Navigator.pushNamed(context, "/gapF");
+              },
+              child: Column(
+                children: [
+                  Container(
                     height: 150,
                     width: 200,
                     child: CircleAvatar(
-                      child: Text("Konuşma Sırası Sende",
-                          style:
-                              TextStyle(fontSize: 25, color: Colors.black87)),
-                      backgroundImage: AssetImage("images/konusma.jpg"),
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Center(
-                child: InkWell(
-                  onTap: () {
-                    Navigator.pushNamed(context, "/gapF");
-                  },
-                  child: Container(
-                    height: 150,
-                    width: 200,
-                    child: CircleAvatar(
-                      child: Text("Boşluk Doldurma",
-                          style:
-                              TextStyle(fontSize: 25, color: Colors.black87)),
                       backgroundImage: AssetImage("images/fillgaps.jpg"),
                     ),
                   ),
-                ),
+                  Text("Boşluk Doldurma",
+                      style: TextStyle(
+                          fontSize: 25,
+                          color: Colors.black,
+                          fontStyle: FontStyle.italic)),
+                ],
               ),
-            ],
+            ),
           ),
-        ));
+        ],
+      ),
+    );
   }
 }

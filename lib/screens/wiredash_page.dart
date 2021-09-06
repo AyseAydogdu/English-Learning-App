@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:language_learning_app/screens/basic_home_page.dart';
+import 'package:language_learning_app/screens/dictionary_page.dart';
+import 'package:language_learning_app/screens/fun_page.dart';
 import 'package:language_learning_app/screens/parts.dart';
 import 'package:wiredash/wiredash.dart';
 
@@ -15,21 +17,6 @@ class _WiredashExampleAppState extends State<WiredashExampleApp> {
 
   @override
   Widget build(BuildContext context) {
-    /// The `Wiredash` widget wraps the top level application widget.
-    ///
-    /// `Wiredash` requires the `Project ID` and the `API Key` obtained from the
-    /// "Settings" tab of the console.
-    /// The navigator key is also required to be able to show the overlay.
-    /// `_navigatorKey` is assigned to both `Wiredash` and `MaterialApp`.
-    /// Note: you are not required to use `MaterialApp`,
-    /// Wiredash will work just as well with `CupertinoApp` and `WidgetsApp`.
-    ///
-    /// Wiredash also allows you to set custom themes using `WiredashThemeData`.
-    /// The behaviour as well as the locale and translations can be customized
-    /// using `WiredashOptionsData`.
-    /// Both of these are optional but they enable you to make Wiredash your
-    /// own.
-    /// Read more about translations support in the package's README.
     return Wiredash(
       projectId: "learning-language-app-jcpxsri",
       secret: "t9rwnvhk69efgz7enns5ozbyo1rtael4iqvsb4c4z8um851k",
@@ -37,77 +24,94 @@ class _WiredashExampleAppState extends State<WiredashExampleApp> {
       options: WiredashOptionsData(
         /// Change the locale of the Wiredash UI
         locale: Locale('en'),
-
-        /// Uncomment below to disable the screenshot step
-        // screenshotStep: false,
-
-        /// Uncomment below to disable different buttons
-        // bugReportButton: false,
-        // featureRequestButton: false,
-        // praiseButton: false,
-
-        /// Uncomment below to set custom translations work
-        // customTranslations: {
-        //   const Locale.fromSubtags(languageCode: 'en'):
-        //       const CustomDemoTranslations(),
-        // },
-
-        /// Uncomment below to override the default device locale
-        // and/or text direction
-        // locale: const Locale('de'),
-        // textDirection: TextDirection.rtl,
       ),
-      theme: WiredashThemeData(
-
-          /// Uncomment below to explore the various theme options:
-
-          /// Customize the Font Family
-          // fontFamily: 'Monospace',
-
-          /// Customize the Bottom Sheet Border Radius
-          // sheetBorderRadius: BorderRadius.zero,
-
-          /// Customize Brightness and Colors
-          // brightness: Brightness.light,
-          // primaryColor: Colors.red,
-          // secondaryColor: Colors.blue,
-
-          /// Customize the Pen Colors
-          /// Note: If you change the Pen Colors, please consider providing
-          /// custom translations to the WiredashOptions to ensure the app is
-          /// accessible to all. The default translations describe the default
-          /// pen colors.
-          // firstPenColor: Colors.orange,
-          // secondPenColor: Colors.green,
-          // thirdPenColor: Colors.yellow,
-          // fourthPenColor: Colors.deepPurpleAccent,
-          ),
+      theme: WiredashThemeData(),
       child: MaterialApp(
         navigatorKey: _navigatorKey,
-        home: const _HomePage(),
+        home: const _WirePage(),
       ),
     );
   }
 }
 
-class _HomePage extends StatelessWidget {
-  const _HomePage({Key key}) : super(key: key);
+class _WirePage extends StatelessWidget {
+  const _WirePage({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Wiredash Demo'),
+        title: Text('Bize Bildirin'),
       ),
-      body: Container(child: RaisedButton(
-        onPressed: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => (BasicHomePage()),
-              ));
-        },
-      )),
+      body: Container(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+                margin: EdgeInsets.all(10),
+                child: Text(
+                  "Gitmek İstediğiniz Sayfa İçin Seçim Yapınız",
+                  style: TextStyle(
+                    fontStyle: FontStyle.italic,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 20,
+                    color: Colors.purple[300],
+                  ),
+                )),
+            Center(
+              child: Container(
+                  margin: EdgeInsets.all(10),
+                  height: 70,
+                  width: 200,
+                  child: RaisedButton(
+                    color: Colors.green[300],
+                    child: Text("Ana Sayfa"),
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => (BasicHomePage()),
+                          ));
+                    },
+                  )),
+            ),
+            Center(
+              child: Container(
+                  margin: EdgeInsets.all(10),
+                  height: 70,
+                  width: 200,
+                  child: RaisedButton(
+                    color: Colors.blue[200],
+                    child: Text("Eğlence Sayfası"),
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => (FunPage()),
+                          ));
+                    },
+                  )),
+            ),
+            Center(
+              child: Container(
+                  margin: EdgeInsets.all(10),
+                  height: 70,
+                  width: 200,
+                  child: RaisedButton(
+                    color: Colors.purple[200],
+                    child: Text("Sözlük Sayfası"),
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => (DictionaryPage()),
+                          ));
+                    },
+                  )),
+            ),
+          ],
+        ),
+      ),
       floatingActionButton: FloatingActionButton(
         /// Showing the Wiredash Dialog is as easy as calling:
         /// Wiredash.of(context).show()

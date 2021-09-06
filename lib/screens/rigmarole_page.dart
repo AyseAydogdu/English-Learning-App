@@ -17,12 +17,12 @@ class RigmarolePageState extends State {
   List<Rigmaroles> rigmaroles = [];
   Rigmaroles rigmarole;
   final FlutterTts flutterTts = FlutterTts();
-  String secilen;
-  double rate;
+
   Future speak(String sentence, double rate) async {
     await flutterTts.speak(sentence);
     await flutterTts.setLanguage("en - US");
     await flutterTts.setSpeechRate(rate);
+    await flutterTts.setVolume(3000);
     //if (result == 1) setState(() => ttsState = TtsState.playing);
   }
 
@@ -37,6 +37,8 @@ class RigmarolePageState extends State {
 
   @override
   Widget build(BuildContext context) {
+    double rate = 1;
+    String secilen;
     final FunData funProvider = Provider.of<FunData>(context);
     //String secilen;
     // CategoryApi.getCategoriesKolay(cartProvider);
@@ -67,13 +69,13 @@ class RigmarolePageState extends State {
                         child: Container(
                           height: 100,
                           width: 600,
-
+                          decoration: BoxDecoration(
+                            color: Colors.brown[200],
+                            borderRadius: BorderRadius.circular(10),
+                          ),
                           // width: MediaQuery.of(context).size.width,
                           // color: Colors.orangeAccent,
-                          decoration: BoxDecoration(
-                            color: Colors.grey[400],
-                            borderRadius: BorderRadius.circular(8),
-                          ),
+
                           child: Row(
                             children: [
                               Container(
@@ -91,15 +93,15 @@ class RigmarolePageState extends State {
                                       shape: new RoundedRectangleBorder(
                                           borderRadius:
                                               new BorderRadius.circular(20.0)),
-                                      color: Colors.blueGrey[400],
+                                      color: Colors.orange[300],
                                       child: Text("Yavaş"),
                                       onPressed: () {
                                         setState(() {
                                           rate = 1.0;
                                           secilen = funProvider
                                               .rigmarolesList[index].rigmarole;
+                                          speak(secilen, rate);
                                         });
-                                        speak(secilen, rate);
                                       })),
                               SizedBox(width: 5),
                               Container(
@@ -112,15 +114,15 @@ class RigmarolePageState extends State {
                                       shape: new RoundedRectangleBorder(
                                           borderRadius:
                                               new BorderRadius.circular(20.0)),
-                                      color: Colors.blueGrey[400],
+                                      color: Colors.teal[400],
                                       child: Text("Hızlı"),
                                       onPressed: () {
                                         setState(() {
                                           rate = 3.0;
                                           secilen = funProvider
                                               .rigmarolesList[index].rigmarole;
+                                          speak(secilen, rate);
                                         });
-                                        speak(secilen, rate);
                                       })),
                             ],
                           ),

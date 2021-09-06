@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:language_learning_app/screens/artist_page.dart';
+import 'package:language_learning_app/screens/music_player_page.dart';
+import 'package:language_learning_app/screens/musics_page.dart';
 import 'package:language_learning_app/screens/story_page.dart';
 
 class FunPage extends StatefulWidget {
@@ -25,16 +28,25 @@ class FunPageState extends State {
               padding: EdgeInsets.all(10),
               child: ListView(
                 children: <Widget>[
-                  Container(
-                    height: 50,
-                    padding: EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: Colors.blueGrey[400],
-                    ),
-                    child: Text(
-                      "Müzik",
-                      style: TextStyle(fontSize: 20),
+                  InkWell(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ArtistPage(),
+                          ));
+                    },
+                    child: Container(
+                      height: 50,
+                      padding: EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: Colors.blueGrey[400],
+                      ),
+                      child: Text(
+                        "Müzik",
+                        style: TextStyle(fontSize: 20),
+                      ),
                     ),
                   ),
                   SizedBox(

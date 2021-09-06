@@ -1,8 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:language_learning_app/api/users_api.dart';
 import 'package:language_learning_app/app_theme_data.dart';
 import 'package:language_learning_app/manager/local_notify_manager.dart';
+import 'package:language_learning_app/provider/auth_manager.dart';
 import 'package:language_learning_app/provider/theme_manager.dart';
+import 'package:language_learning_app/screens/select_notification_time_page.dart';
 import 'package:language_learning_app/screens/wiredash_page.dart';
 import 'package:lite_rolling_switch/lite_rolling_switch.dart';
 import 'package:provider/provider.dart';
@@ -15,6 +18,10 @@ class SettingsPage extends StatefulWidget {
 class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
+    final AuthManager authManager =
+        Provider.of<AuthManager>(context, listen: true);
+    UsersApi.initializeCurrentUser(authManager);
+    var user = authManager.user;
     var theme = Provider.of<ThemeManager>(context);
     return Scaffold(
       appBar: AppBar(
@@ -56,10 +63,6 @@ class _SettingsPageState extends State<SettingsPage> {
               height: 15,
               thickness: 2,
             ),
-            SizedBox(
-              height: 10,
-            ),
-            Text("Dil Değiştir", style: TextStyle(fontSize: 20)),
             SizedBox(
               height: 10,
             ),
@@ -153,26 +156,16 @@ class _SettingsPageState extends State<SettingsPage> {
               // height: 40,
               child: Row(
                 children: [
-                  Text(
-                    "Motivasyon Mesajları",
-                    style: TextStyle(fontSize: 20),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(left: 55, top: 8),
-                    child: Container(
-                      height: 40,
-                      child: LiteRollingSwitch(
-                        value: true,
-                        textOn: 'active',
-                        textOff: 'inactive',
-                        colorOn: Colors.greenAccent,
-                        colorOff: Colors.redAccent,
-                        iconOn: Icons.lightbulb_outline,
-                        iconOff: Icons.power_settings_new,
-                        onChanged: (bool state) {
-                          print('turned ${(state) ? 'on' : 'off'}');
-                        },
-                      ),
+                  InkWell(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => SelectNotificationTime()));
+                    },
+                    child: Text(
+                      "Motivasyon Mesajları",
+                      style: TextStyle(fontSize: 20),
                     ),
                   ),
                 ],
@@ -220,7 +213,9 @@ class _SettingsPageState extends State<SettingsPage> {
                 padding: EdgeInsets.symmetric(horizontal: 40),
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20)),
-                onPressed: () {},
+                onPressed: () {
+                  UsersApi.signout(authManager);
+                },
                 child: Text("SIGN OUT",
                     style: TextStyle(
                         fontSize: 16, letterSpacing: 2.2, color: Colors.black)),

@@ -23,15 +23,15 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  firebase_auth: ^0.18.0+1
-  firebase_core: ^0.5.0
-  http: ^0.12.2
-  provider: ^4.3.2+2
-  equatable: ^1.2.5
-  flushbar: ^1.10.4
-  shared_preferences: ^0.5.12+4
-  cloud_firestore: ^0.14.3+1
-  cupertino_icons: ^0.1.2
+  firebase_auth:
+  firebase_core:
+  http: 
+  provider:
+  equatable:
+  flushbar:
+  shared_preferences:
+  cloud_firestore:
+  cupertino_icons:
   alert_dialog: ^0.1.0
   footer: ^0.0.3
   flutter_tts: ^2.0.0
@@ -50,7 +50,9 @@ dependencies:
   translator:
   wiredash:
   select_form_field:
-  
+  flip_card:
+  youtube_player_flutter:
+  date_time_picker:
   
  
   
@@ -77,14 +79,25 @@ flutter:
   assets:
     - images/diller.jpg
     - images/kolay.png
-    - images/orta.jpg
-    - images/zor.jpg
+    - images/yds.png
+    - images/orta.png
+    - images/ileri.png
     - images/parts.jpg
     - images/mavibalon.jpg
     - images/scratch.png
     - images/avatar.png
     - images/fillgaps.jpg
-    - images/book.png
+    - images/gramer.png
+    - images/adele.jpg
+    - images/annemarie.jpg
+    - images/dualipa.jpg
+    - images/quiz.png
+    - images/text.png
+    - images/surukle.jpg
+    - images/dinleme.jpg
+    - images/konusma.jpg
+    
+
 
   #   - images/a_dot_ham.jpeg
 

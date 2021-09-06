@@ -39,7 +39,7 @@ class LevelPageState extends State<LevelPage> {
               scrollDirection: Axis.vertical,
               shrinkWrap: true,
               physics: ClampingScrollPhysics(),
-              // itemCount: levels.length,
+              itemCount: levels.length,
               itemBuilder: (BuildContext context, int index) {
                 String name = levels[index].name;
                 //  levelData.setString("level", name);
@@ -60,7 +60,7 @@ class LevelPageState extends State<LevelPage> {
                             backgroundImage: AssetImage(levels[index].imageUrl),
                           ),
                         ),
-                        Text(levels[index].name),
+                        //   Text(levels[index].name),
                       ],
                     ),
                   ),

@@ -4,10 +4,11 @@ class Levels {
   Levels(this.name, this.imageUrl);
 
   static List<Levels> LanguageList = [
-    Levels("Kolay", "images/book.png"),
-    Levels("Orta", "images/orta.jpg"),
-    Levels("İleri", "images/zor.jpg"),
-    Levels("Gramer", "images/orta.jpg"),
-    Levels("Yds/Yökdil", "images/zor.jpg")
+    Levels("Kolay", "images/kolay.png"),
+    Levels("Orta", "images/orta.png"),
+    Levels("İleri", "images/ileri.png"),
+    Levels("Gramer", "images/gramer.png"),
+    Levels("Yds/Yökdil", "images/yds.png"),
+    Levels("Quiz", "images/quiz.png")
   ];
 }

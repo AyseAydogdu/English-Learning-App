@@ -49,7 +49,9 @@ class CreateAccountPageState extends State<CreateAccountPage> {
               children: <Widget>[
                 Expanded(
                     child: Container(
-                        height: 100, child: Image.asset("images/diller.jpg"))),
+                        margin: EdgeInsets.all(16),
+                        height: 100,
+                        child: Image.asset("images/diller.jpg"))),
                 Form(
                   key: formKey,
                   child: Container(

@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 import 'dart:async';
@@ -6,12 +7,22 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:language_learning_app/api/users_api.dart';
+import 'package:language_learning_app/models/users.dart';
+import 'package:language_learning_app/provider/auth_manager.dart';
+import 'package:language_learning_app/provider/fundata.dart';
+import 'package:language_learning_app/provider/user_manager.dart';
+
+import 'package:language_learning_app/screens/basic_home_page.dart';
 import 'package:language_learning_app/screens/settings_page.dart';
 import 'package:path/path.dart';
+import 'package:provider/provider.dart';
 
 class ProfilePage extends StatefulWidget {
   @override
-  ProfilePageState createState() => ProfilePageState();
+  State<StatefulWidget> createState() {
+    return ProfilePageState();
+  }
 }
 
 class ProfilePageState extends State<ProfilePage> {
@@ -30,11 +41,21 @@ class ProfilePageState extends State<ProfilePage> {
     uploadPic();
   }
 
+/*uploadFirebase(AuthManager authManager)async
+{
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(authManager.user.uid)
+        .collection("dictionary$valueC")
+        .doc()
+        .set({"name": });
+}*/
   Future uploadPic() async {
     //String fileName = basename(imageFile.path);
     StorageReference firebaseStorageRef =
         FirebaseStorage.instance.ref().child("users").child("profile");
     StorageUploadTask uploadTask = firebaseStorageRef.putFile(imageFile);
+
     //StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
     setState(() {
       print("Profile Picture uploaded");
@@ -42,80 +63,29 @@ class ProfilePageState extends State<ProfilePage> {
       //    .showSnackBar(SnackBar(content: Text('Profile Picture Uploaded')));
     });
   }
-  /* Future uploadPic(BuildContext context) async{
-      String fileName = basename(imageFile.path);
-      firebase_storage.Reference ref = firebase_storage.FirebaseStorage.instance.ref().child(fileName);
-       //StorageReference firebaseStorageRef = firebase_storage.instance.ref().child(fileName);
-       firebase_storage.UploadTask uploadTask= ref.putFile(imageFile);
-       //StorageUploadTask uploadTask = firebaseStorageRef.putFile(imageFile);
-        return Future.value(uploadTask);
-       //StorageTaskSnapshot taskSnapshot=await uploadTask.onComplete;
-       setState(() {
-          print("Profile Picture uploaded");
-          Scaffold.of(context).showSnackBar(SnackBar(content: Text('Profile Picture Uploaded')));
-       });
-    }*/
-  /* Future uploadImageToFirebase(BuildContext context) async {
-    String fileName = basename(imageFile.path);
-    firebase_storage.FirebaseStorage storage =
-  firebase_storage.FirebaseStorage.instance;
-    StorageReference firebaseStorageRef =
-        FirebaseStorage.instance.ref().child('uploads/$fileName');
-    StorageUploadTask uploadTask = firebaseStorageRef.putFile(_imageFile);
-    StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
-    taskSnapshot.ref.getDownloadURL().then(
-          (value) => print("Done: $value"),
-        );
-  }*/
 
-  /* _openGallery(BuildContext context) async{
-    var picture =  await ImagePicker.(source: ImageSource.gallery);
-    this.setState((){
-      imageFile = picture;
-    });
-    Navigator.of(context).pop();
+  @override
+  void initState() {
+    super.initState();
   }
-
-  _openCamera(BuildContext context) async{
-    final pickedFile = await picker.getImage(source: ImageSource.camera);
-    
-
-    var picture =  await ImagePicker.pickImage(source: ImageSource.camera);
-    this.setState((){
-      imageFile = picture;
-    });
-    Navigator.of(context).pop();
-  }*/
 
   final TextEditingController emailController2 = TextEditingController();
   final TextEditingController passwordController2 = TextEditingController();
   final TextEditingController nameController2 = TextEditingController();
   final TextEditingController surnameController2 = TextEditingController();
   var formKey = GlobalKey<FormState>();
-  getUsers() {
-    FirebaseFirestore.instance.collection("users").doc().get().then((value) {
-      setState(() {
-        ad = value.data()["name"];
-        soyad = value.data()["surname"];
-        mail = value.data()["mail"];
-        sifre = value.data()["password"];
-        nameController2.text = ad;
-        surnameController2.text = soyad;
-        emailController2.text = mail;
-        passwordController2.text = sifre;
-      });
-    });
-  }
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    getUsers();
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
+    final AuthManager authManager =
+        Provider.of<AuthManager>(context, listen: true);
+    final UserManager userManager =
+        Provider.of<UserManager>(context, listen: true);
+    UsersApi.initializeCurrentUser(authManager);
+    var user = authManager.user;
+    UsersApi.getUsers(user, userManager);
+    Users users = userManager.user;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -180,54 +150,6 @@ class ProfilePageState extends State<ProfilePage> {
                         ),
                       ),
                     ),
-                    /*   Container(
-                      width: 130,
-                      height: 130,
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                              width: 4,
-                              color: Theme.of(context).scaffoldBackgroundColor),
-                          boxShadow: [
-                            BoxShadow(
-                                spreadRadius: 2,
-                                blurRadius: 10,
-                                color: Colors.black.withOpacity(0.1),
-                                offset: Offset(0, 10))
-                          ],
-                          shape: BoxShape.circle,
-                          image: (imageFile != null)
-                              ? Image.file(imageFile)
-                              : DecorationImage(
-                                  fit: BoxFit.cover,
-                                  image: AssetImage("images/avatar.png"))),
-                    ),
-                    Positioned(
-                        bottom: 0,
-                        right: 0,
-                        child: Container(
-                          height: 40,
-                          width: 40,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            border: Border.all(
-                              width: 4,
-                              color: Theme.of(context).scaffoldBackgroundColor,
-                            ),
-                            color: Colors.green,
-                          ),
-                          child: InkWell(
-                            onTap: () {
-                              showModalBottomSheet(
-                                context: context,
-                                builder: ((builder) => bottomSheet()),
-                              );
-                            },
-                            child: Icon(
-                              Icons.camera_alt,
-                              color: Colors.white,
-                            ),
-                          ),
-                        )),*/
                   ],
                 ),
               ),
@@ -250,7 +172,7 @@ class ProfilePageState extends State<ProfilePage> {
                               value.isEmpty ? null : 'Lütfen isim girin',
                           decoration: InputDecoration(
                             hintText: "Name",
-                            labelText: "name",
+                            labelText: users.name,
                             border: OutlineInputBorder(),
                           ),
                         ),
@@ -264,7 +186,7 @@ class ProfilePageState extends State<ProfilePage> {
                               value.isEmpty ? null : 'Lütfen soyisim girin',
                           decoration: InputDecoration(
                             hintText: "Lütfen Soyisim Girin",
-                            labelText: soyad,
+                            labelText: users.surname,
                             border: OutlineInputBorder(),
                           ),
                         ),
@@ -279,7 +201,7 @@ class ProfilePageState extends State<ProfilePage> {
                               : 'Gecerli email adresi yazın',
                           decoration: InputDecoration(
                             hintText: "Lütfen Email Adresi Girin",
-                            labelText: mail,
+                            labelText: users.mail,
                             border: OutlineInputBorder(),
                           ),
                         ),
@@ -295,7 +217,7 @@ class ProfilePageState extends State<ProfilePage> {
                               : 'Sifreniz en az 6 karakter olmalıdır',
                           decoration: InputDecoration(
                             hintText: "Lütfen Sifre Girin",
-                            labelText: sifre,
+                            labelText: users.password,
                             border: OutlineInputBorder(),
                           ),
                         ),
@@ -307,11 +229,6 @@ class ProfilePageState extends State<ProfilePage> {
                   ),
                 ),
               ),
-              //buildTextField("Full Name", ad + " " + soyad, false),
-              //buildTextField("E-mail", mail, false),
-              //buildTextField("Password", sifre, true),
-              // buildTextField("Location", "Turkey", false),
-
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -322,24 +239,22 @@ class ProfilePageState extends State<ProfilePage> {
                     onPressed: () {
                       Navigator.pushNamed(context, "/basicPage");
                     },
-                    child: Text("CANCEL",
-                        style: TextStyle(
-                            fontSize: 14,
-                            letterSpacing: 2.2,
-                            color: Colors.black)),
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => BasicHomePage()));
+                      },
+                      child: Text("CANCEL",
+                          style: TextStyle(
+                              fontSize: 14,
+                              letterSpacing: 2.2,
+                              color: Colors.black)),
+                    ),
                   ),
                   RaisedButton(
-                    onPressed: () {
-                      FirebaseFirestore.instance
-                          .collection("users")
-                          .doc("0")
-                          .update({
-                        "name": nameController2.text,
-                        "surname": surnameController2.text,
-                        "mail": emailController2.text,
-                        "password": passwordController2.text,
-                      });
-                    },
+                    onPressed: () {},
                     color: Colors.green,
                     padding: EdgeInsets.symmetric(horizontal: 50),
                     elevation: 2,
